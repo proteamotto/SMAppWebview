@@ -22,14 +22,19 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        String url = "https://www.smapp.com.ar/?from_app";
+
         if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
                 String value = getIntent().getExtras().getString(key);
-                Log.d("NADA", key +" : "+ value);
+                //Log.d("NADA", "Key: "+ key +", Value: "+ value);
+                if (key.equals("smappurl")) {
+                    url = value;
+                }
             }
         }
 
-        String url = "https://www.smapp.com.ar/?from_app";
+
         webview = (WebView) this.findViewById(R.id.webview);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings().setUserAgentString("com.smappdevelopers.smapp:1");
