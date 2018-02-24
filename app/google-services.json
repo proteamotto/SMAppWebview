@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "107766887900",
+    "firebase_url": "https://smapp-6f3b3.firebaseio.com",
+    "project_id": "smapp-6f3b3",
+    "storage_bucket": "smapp-6f3b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107766887900:android:a8b331dfd4c63371",
+        "android_client_info": {
+          "package_name": "com.smappdevelopers.smapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "107766887900-73tt9pidp1flt42ot12als92fbmflan6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE9CWXLg5s-HZrRTliu2nznAKH5_PwW4Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
