@@ -11,7 +11,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class SMAppFirebaseInstanceIdService extends FirebaseInstanceIdService {
 
-    public static final String TAG = "NOTICIAS";
+    public static final String TAG = "SMAPPTAG";
 
     @Override
     public void onTokenRefresh() {

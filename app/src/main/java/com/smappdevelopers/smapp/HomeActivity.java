@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity {
 
+    public static final String TAG = "SMAPPTAG";
+
     WebView webview;
 
     @Override
@@ -24,7 +26,9 @@ public class HomeActivity extends AppCompatActivity {
 
         String url = "https://www.smapp.com.ar/?from_app";
 
+
         if (getIntent().getExtras() != null) {
+            //Toast.makeText(getApplicationContext(), "EXTRAS!", Toast.LENGTH_SHORT).show();
             for (String key : getIntent().getExtras().keySet()) {
                 String value = getIntent().getExtras().getString(key);
                 //Log.d("NADA", "Key: "+ key +", Value: "+ value);
@@ -48,6 +52,44 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+
+        Bundle extras = getIntent().getExtras();
+
+
+        //Toast.makeText(getApplicationContext(), "NEW INTENT!", Toast.LENGTH_SHORT).show();
+        String url = "https://www.smapp.com.ar/?from_app";
+
+        if (extras != null) {
+            //Toast.makeText(getApplicationContext(), "EXTRAS!", Toast.LENGTH_SHORT).show();
+            for (String key : extras.keySet()) {
+                String value = extras.getString(key);
+                //Log.d(TAG, "Key: "+ key +", Value: "+ value);
+                if (key.equals("smappurl")) {
+                    url = value;
+                }
+            }
+
+            webview = (WebView) this.findViewById(R.id.webview);
+            webview.getSettings().setJavaScriptEnabled(true);
+            webview.getSettings().setUserAgentString("com.smappdevelopers.smapp:1");
+            if (isConnected()) {
+                webview.loadUrl(url);
+                webview.setWebViewClient(new MyWebViewClient());
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Sin conexión a internet", Toast.LENGTH_LONG).show();
+            }
+        }
+        else {
+            //Toast.makeText(getApplicationContext(), "EXTRAS NULL", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public boolean isConnected() {
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -59,43 +101,58 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.startsWith("tel:")) {
-                HomeActivity.this.startActivity(new Intent("android.intent.action.DIAL", Uri.parse(url)));
-                return true;
-            } else if (url.startsWith("mailto:")) {
-                url = url.substring(7);
-                Intent mail = new Intent("android.intent.action.SEND");
-                mail.setType("application/octet-stream");
-                mail.putExtra("android.intent.extra.EMAIL", new String[]{url});
-                mail.putExtra("android.intent.extra.SUBJECT", "");
-                mail.putExtra("android.intent.extra.TEXT", "");
-                HomeActivity.this.startActivity(mail);
-                return true;
-            } else if (url.startsWith("share:")) {
-                url = url.substring(6);
-                Intent i = new Intent("android.intent.action.SEND");
-                i.setType("text/plain");
-                i.putExtra("android.intent.extra.SUBJECT", "Sharing URL");
-                i.putExtra("android.intent.extra.TEXT", url);
-                HomeActivity.this.startActivity(Intent.createChooser(i, "Share URL"));
-                return true;
-            } else if (url.startsWith("geo:")) {
-                HomeActivity.this.startActivity(new Intent("android.intent.action.VIEW", Uri.parse("http://maps.google.com/maps?z=8&q=" + url.substring(4))));
-                return true;
-            } else if (url.startsWith("route:")) {
-                HomeActivity.this.startActivity(new Intent("android.intent.action.VIEW", Uri.parse("google.navigation:q=" + url.substring(6))));
-                return true;
-            } else if (!Uri.parse(url).getHost().equals("www.smapp.com.ar")) {
-                Intent i = new Intent("android.intent.action.VIEW");
-                i.setData(Uri.parse(url));
-                HomeActivity.this.startActivity(i);
-                return true;
-            } else if (HomeActivity.this.isConnected()) {
-                return false;
-            } else {
-                Toast.makeText(HomeActivity.this.getApplicationContext(), "Sin conexión a internet", 1).show();
-                return true;
-            }
+            if (url.startsWith("tel:"))
+                {
+                    HomeActivity.this.startActivity(new Intent("android.intent.action.DIAL", Uri.parse(url)));
+                    return true;
+                }
+            else if (url.startsWith("mailto:"))
+                {
+                    url = url.substring(7);
+                    Intent mail = new Intent("android.intent.action.SEND");
+                    mail.setType("application/octet-stream");
+                    mail.putExtra("android.intent.extra.EMAIL", new String[]{url});
+                    mail.putExtra("android.intent.extra.SUBJECT", "");
+                    mail.putExtra("android.intent.extra.TEXT", "");
+                    HomeActivity.this.startActivity(mail);
+                    return true;
+                }
+            else if (url.startsWith("share:"))
+                {
+                    url = url.substring(6);
+                    Intent i = new Intent("android.intent.action.SEND");
+                    i.setType("text/plain");
+                    i.putExtra("android.intent.extra.SUBJECT", "Sharing URL");
+                    i.putExtra("android.intent.extra.TEXT", url);
+                    HomeActivity.this.startActivity(Intent.createChooser(i, "Share URL"));
+                    return true;
+                }
+            else if (url.startsWith("geo:"))
+                {
+                    HomeActivity.this.startActivity(new Intent("android.intent.action.VIEW", Uri.parse("http://maps.google.com/maps?z=8&q=" + url.substring(4))));
+                    return true;
+                }
+            else if (url.startsWith("route:"))
+                {
+                    HomeActivity.this.startActivity(new Intent("android.intent.action.VIEW", Uri.parse("google.navigation:q=" + url.substring(6))));
+                    return true;
+                }
+            else if (!Uri.parse(url).getHost().equals("www.smapp.com.ar"))
+                {
+                    Intent i = new Intent("android.intent.action.VIEW");
+                    i.setData(Uri.parse(url));
+                    HomeActivity.this.startActivity(i);
+                    return true;
+                }
+            else if (HomeActivity.this.isConnected())
+                {
+                    return false;
+                }
+            else
+                {
+                    Toast.makeText(HomeActivity.this.getApplicationContext(), "Sin conexión a internet", Toast.LENGTH_LONG).show();
+                    return true;
+                }
         }
     }
 
