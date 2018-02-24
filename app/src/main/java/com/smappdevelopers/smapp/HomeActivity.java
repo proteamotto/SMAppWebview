@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        String url = "http://www.smapp.com.ar/?from_app";
+        String url = "https://www.smapp.com.ar/?from_app";
         webview = (WebView) this.findViewById(R.id.webview);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings().setUserAgentString("com.smappdevelopers.smapp:1");
