@@ -47,6 +47,7 @@ public class SMAppFirebaseMessagingService extends FirebaseMessagingService {
     private void mostrarNotificacion(String title, String body, Map<String,String> data) {
 
         String smappurl = "";
+        String sendto = "";
 
         Intent intent = new Intent(this, HomeActivity.class);
 
@@ -56,9 +57,12 @@ public class SMAppFirebaseMessagingService extends FirebaseMessagingService {
             if (key.equals("smappurl")) {
                 smappurl = value;
             }
+            if (key.equals("sendto")) {
+                sendto = value;
+            }
         }
 
-        if (smappurl.length() > 0)
+        if ((smappurl.length() > 0) && (sendto.equals("allusers")))
             {
                 intent.putExtra("smappurl", data.get("smappurl"));
 

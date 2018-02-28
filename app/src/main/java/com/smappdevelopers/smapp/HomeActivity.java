@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity {
@@ -18,12 +20,23 @@ public class HomeActivity extends AppCompatActivity {
     public static final String TAG = "SMAPPTAG";
 
     WebView webview;
+    //Button settingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+/*
+        settingsButton = (Button) findViewById(R.id.button2);
 
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(settingsIntent);
+            }
+        });
+*/
         String url = "https://www.smapp.com.ar/?from_app";
 
 
